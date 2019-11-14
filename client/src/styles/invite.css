@@ -1,0 +1,28 @@
+.container {
+  width: 1200px;
+}
+.Contact {
+  text-align: left;
+
+  border-bottom: solid 1px darkgrey;
+}
+.sinUser {
+  width: 300px;
+  background: #ccc;
+  margin: auto;
+}
+.picCont {
+  padding: 30px;
+  text-align: center;
+  border-bottom: solid 1px darkgrey;
+}
+#Pic {
+  margin: auto;
+  border-radius: 100px;
+  border: solid rgb(75, 75, 75);
+}
+
+.buto {
+  display: flex;
+  justify-content: space-evenly;
+}

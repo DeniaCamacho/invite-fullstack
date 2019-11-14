@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
+
+
+
+
+{"results":[
+  {"gender":"male",
+    "name":{"title":"Mr","first":"James","last":"Clarke"},
+    "location":{"street":{"number":9277,"name":"Te Irirangi Drive"},
+    "city":"Invercargill",
+    "state":"Waikato",
+    "country":"New Zealand","postcode":13991,"coordinates":{"latitude":"65.6150","longitude":"-2.3058"},"timezone":{"offset":"-11:00","description":"Midway Island, Samoa"}},"email":"james.clarke@example.com","login":{"uuid":"810ed5d0-1457-4cd4-8ac6-6302665718e3","username":"silverkoala437","password":"pa55w0rd","salt":"ftvBW1sa","md5":"3dc689d737420b7f2fac2a8d0ff338ad","sha1":"d238605052926d6eef8eda1b5e76aa57cde827c7","sha256":"662698a5d453d4514607ea23b16328a3c53fdad2551293b9703e7179677863d0"},"dob":{"date":"1957-07-14T18:13:08.020Z","age":62},"registered":{"date":"2003-02-16T17:49:45.321Z","age":16},"phone":"(433)-415-9212","cell":"(388)-952-7036","id":{"name":"","value":null},"picture":{"large":"https://randomuser.me/api/portraits/men/15.jpg","medium":"https://randomuser.me/api/portraits/med/men/15.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/15.jpg"},"nat":"NZ"}],"info":{"seed":"2e228f32bead4516","results":1,"page":1,"version":"1.3"}}
