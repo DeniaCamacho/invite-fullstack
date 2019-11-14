@@ -10,17 +10,17 @@ export default function Going() {
         return (
           <div className="sinUser">
             <div className="picCont">
-              <img id="Pic" alt={user.id} src={user.picture.large} />
+              <img id="Pic" alt={user.id} src={user.user.picture.large} />
             </div>
             <div className="Contact">
               <div>
-                <p>Name: {user.name.first + " " + user.name.last}</p>
+                <p>Name: {user.user.name.first + " " + user.user.name.last}</p>
               </div>
               <div>
-                <p>Phone: {user.cell}</p>
+                <p>Phone: {user.user.cell}</p>
               </div>
               <div>
-                <p>Email: {user.email}</p>
+                <p>Email: {user.user.email}</p>
               </div>
             </div>
           </div>

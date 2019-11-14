@@ -32,13 +32,14 @@ const Invite = props => {
           <div className="buto">
             {users.map(e => (
               <>
-                <Link key={e.id} to={"/going/" + e.id}>
-                  <button className="Going" onClick={e => handleAdd(user)}>
+                <Link key={e.id} to={"/notGoing/" + e.id}>
+                  <button className="Not Going" onClick={e => handleAdd(user)}>
+                    {" "}
                     <Icon icon="times"></Icon>
                   </button>
                 </Link>
-                <Link key={e.id} to={"/notGoing/" + e.id}>
-                  <button className="Not Going" onClick={e => handleAdd(user)}>
+                <Link key={e.id} to={"/Going/" + e.id}>
+                  <button className="Going" onClick={e => handleAdd(user)}>
                     <Icon icon="check"></Icon>
                   </button>
                 </Link>
