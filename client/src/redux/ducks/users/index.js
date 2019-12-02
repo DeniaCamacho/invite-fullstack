@@ -4,14 +4,17 @@ import axios from "axios"
 
 // action definitions
 const GET_USERS = "users/GET_USERS"
-const SHOW_GOING = "users/SHOW_GOING"
-const SHOW_NOTGOING = "users/SHOW_NOTGOING"
+const SET_GOING = "users/SET_GOING"
+const SET_NOTGOING = "users/SET_NOTGOING"
+const LOADING = "users/LOADING"
+const FINISHED = "users/FINISHED"
 
 // initial state
 const initialState = {
-  users: [],
+  users: {},
   going: [],
-  notGoing: []
+  notgoing: [],
+  loading: false
 }
 
 // reducer
@@ -19,22 +22,32 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
       return { ...state, users: action.payload }
-    case SHOW_GOING:
-      return { ...state, going: action.payload }
-    case SHOW_NOTGOING:
-      return { ...state, notGoing: action.payload }
+    case SET_GOING:
+      return { ...state, going: [...state.going, action.payload] }
+    case SET_NOTGOING:
+      return { ...state, notgoing: [...state.notgoing, action.payload] }
+    case LOADING:
+      return { ...state, loading: true }
+    case FINISHED:
+      return { ...state, loading: false }
     default:
       return state
   }
 }
 
 // action creators
-const getUsers = () => {
+function getUsers() {
   return dispatch => {
-    axios.get("https://randomuser.me/api/?results=1").then(resp => {
+    dispatch({
+      type: LOADING
+    })
+    axios.get("/users/users").then(resp => {
       dispatch({
         type: GET_USERS,
-        payload: resp.data.results
+        payload: resp.data
+      })
+      dispatch({
+        type: FINISHED
       })
     })
   }
@@ -42,67 +55,65 @@ const getUsers = () => {
 // const getGoing = () => {
 //   return dispatch => {
 //     axios.get("/users/going").then(resp => {
-//       console.log(resp)
 //       dispatch({
-//         type: SHOW_GOING,
+//         type: SET_GOING,
 //         payload: resp.data
 //       })
 //     })
 //   }
 // }
-const addGoing = user => {
+// const getNotGoing = () => {
+//   return dispatch => {
+//     axios.get("/users/notgoing").then(resp => {
+//       dispatch({
+//         type: SET_NOTGOING,
+//         payload: resp.data
+//       })
+//     })
+//   }
+// }
+
+function setGoing(person) {
   return dispatch => {
-    axios.post("/users/going", { user }).then(resp => {
-      dispatch(showGoingUsers(resp.data))
+    axios.post("/users/going", person).then(resp => {
+      dispatch({
+        type: SET_GOING,
+        payload: resp.data
+      })
+      dispatch(getUsers())
     })
   }
 }
 
-const showGoingUsers = () => {
+const setNotGoing = person => {
   return dispatch => {
-    axios.get("/users/going").then(resp => {
+    axios.post("/users/notGoing", person).then(resp => {
       dispatch({
-        type: SHOW_GOING,
+        type: SET_NOTGOING,
         payload: resp.data
       })
-    })
-  }
-}
-const showNotGoingUsers = () => {
-  return dispatch => {
-    axios.get("/users/notGoing").then(resp => {
-      dispatch({
-        type: SHOW_NOTGOING,
-        payload: resp.data
-      })
+      dispatch(getUsers())
+      // dispatch(getNotGoing())
     })
   }
 }
 
-const addNotGoing = user => {
-  return dispatch => {
-    axios.post("/users/notGoing", { user }).then(resp => {
-      dispatch(showNotGoingUsers(resp.data))
-    })
-  }
-}
 // custom hooks
 export function useUsers() {
   const users = useSelector(appState => appState.userState.users)
   const dispatch = useDispatch()
   const going = useSelector(appState => appState.userState.going)
-  const notGoing = useSelector(appState => appState.userState.notGoing)
-  const addGoingUsers = going => dispatch(addGoing(going))
-  const addNotGoingUsers = notGoing => dispatch(addNotGoing(notGoing))
+  const notgoing = useSelector(appState => appState.userState.notgoing)
+  const go = person => dispatch(setGoing(person))
+  const no = person => dispatch(setNotGoing(person))
+  const get = () => dispatch(getUsers())
+  const loading = useSelector(appState => appState.userState.loading)
 
-  useEffect(
-    user => {
-      dispatch(getUsers())
-      dispatch(showGoingUsers())
-      dispatch(showNotGoingUsers())
-    },
-    [dispatch]
-  )
+  useEffect(() => {
+    get()
+    // dispatch(setNotGoing())
+    // dispatch(setGoing())
+  }, [])
 
-  return { users, going, addGoingUsers, addNotGoingUsers }
+  return { users, going, notgoing, go, no, get, loading, dispatch }
 }
